@@ -127,6 +127,21 @@ RSpec.describe Game do
       end
     end
 
+    context 'board with 2 runners' do
+      let(:dice_roll) {[1, 1, 2, 2]}
+
+      before do
+        subject.runner_positions = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+      end
+
+      it 'adds runner to 2 on order 2, 4' do
+        expect(subject.move([2,4])).to eq([1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1])
+      end
+
+      it 'adds runner to 4 on order 4, 2' do
+        expect(subject.move([4,2])).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1])
+      end
+    end
   end
 
 end
