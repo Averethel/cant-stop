@@ -144,4 +144,99 @@ RSpec.describe Game do
     end
   end
 
+  context '.stop!' do
+    let(:new_roll){ [1,2,3,4] }
+    let(:current_positions){{
+      "0" => [0, 0, 2, 0, 4, 0, 0, 0, 0, 0, 0],
+      "1" => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    }}
+    let(:updated_positions){ [1, 0, 3, 0, 4, 0, 0, 0, 0, 1, 0] }
+
+    before do
+      subject.current_roll = "1,1,2,2"
+      subject.runner_positions = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+      subject.current_positions = current_positions
+      subject.move([2, 4])
+      allow(subject).to receive(:roll_dice).and_return(new_roll)
+    end
+
+    it 'saves the progress' do
+      expect{
+        subject.stop!
+      }.to change{
+        subject.current_positions["0"]
+      }.to(updated_positions)
+    end
+
+    it 'resets the runners' do
+      expect{
+        subject.stop!
+      }.to change{
+        subject.runner_positions
+      }.to(Array.new(11,0))
+    end
+
+    context 'moving to the next player' do
+      context 'when current player is not the last one' do
+        before do
+          subject.current_player = 0
+        end
+
+        it 'moves to next player' do
+          expect{
+            subject.stop!
+          }.to change{
+            subject.current_player
+          }.to(1)
+        end
+      end
+
+      context 'when current player is the last one' do
+        before do
+          subject.current_player = 1
+        end
+
+        it 'goes back to first player' do
+          expect{
+            subject.stop!
+          }.to change{
+            subject.current_player
+          }.to(0)
+        end
+      end
+    end
+
+    it 'rolls again' do
+      expect{
+        subject.stop!
+      }.to change{
+        subject.current_dice_roll
+      }.to(new_roll)
+    end
+
+    it 'returns updated_positions' do
+      expect(subject.stop!).to eq(updated_positions)
+    end
+  end
+
+  context '.continue!' do
+    let(:new_roll){ [1,2,3,4] }
+
+    before do
+      subject.current_roll = "1,1,1,1"
+      allow(subject).to receive(:roll_dice).and_return(new_roll)
+    end
+
+    it 'rolls again' do
+      expect{
+        subject.continue!
+      }.to change{
+        subject.current_dice_roll
+      }.to(new_roll)
+    end
+
+    it 'returns the roll back' do
+      expect(subject.continue!).to eq(new_roll)
+    end
+  end
 end

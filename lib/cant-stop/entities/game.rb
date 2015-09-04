@@ -48,6 +48,16 @@ class Game
     GameRepository.persist(self)
     roll
   end
+  alias :continue! :roll_dice!
+
+  def stop!
+    progress = save_progress
+    reset_runners
+    next_player
+    roll_dice!
+
+    progress
+  end
 
   def can_move?
     possible_rolls.any?{ |r| can_progress_or_add_runner?(r) }
@@ -61,8 +71,28 @@ class Game
     self.runner_positions
   end
 
-
 private
+
+  def save_progress
+    positions = current_positions
+    positions[current_player.to_s] = merge_with_runners(positions[current_player.to_s])
+    self.current_positions = positions
+
+    positions[current_player.to_s]
+  end
+
+  def merge_with_runners(positions)
+    positions.zip(runner_positions).map(&:max)
+  end
+
+  def reset_runners
+    self.runner_positions = Array.new(11, 0)
+  end
+
+  def next_player
+    self.current_player += 1
+    self.current_player %= player_count
+  end
 
   def progress(roll)
     return move_runner(roll) if has_runner?(roll)
@@ -103,7 +133,6 @@ private
     runner_positions[index] > 0
   end
 
-
   def possible_rolls
     current_dice_roll.combination(2).map{ |a, b| a + b }.uniq
   end
@@ -139,5 +168,9 @@ private
 
   def roll_dice
     Array.new(4){ rand(6) + 1}
+  end
+
+  def player_count
+    current_positions.keys.size
   end
 end
