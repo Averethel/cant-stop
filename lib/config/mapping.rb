@@ -1,7 +1,8 @@
-# collection :users do
-#   entity     User
-#   repository UserRepository
-#
-#   attribute :id,   Integer
-#   attribute :name, String
-# end
+collection :games do
+  entity     Game
+  repository GameRepository
+
+  attribute :id, Integer
+  attribute :current_runners, String
+  attribute :player_positions, String
+end

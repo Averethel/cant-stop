@@ -9,6 +9,10 @@ gem 'lotus-model',   '~> 0.4'
 
 gem 'pg'
 
+group :development do
+  gem 'pry'
+end
+
 group :test do
   gem 'rspec'
   gem 'capybara'
