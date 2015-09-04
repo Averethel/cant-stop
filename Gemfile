@@ -11,6 +11,7 @@ gem 'pg'
 
 group :development do
   gem 'pry'
+  gem 'byebug'
 end
 
 group :test do

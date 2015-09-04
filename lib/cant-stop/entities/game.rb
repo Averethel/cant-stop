@@ -53,12 +53,12 @@ class Game
 
 private
 
-  def can_progress_or_add_runner?(rool)
+  def can_progress_or_add_runner?(roll)
     can_place_runner?(roll) &&
     (has_runner?(roll) || runner_count < 3)
   end
 
-  def has_runner(roll)
+  def has_runner?(roll)
     index = roll_to_index(roll)
 
     runner_positions[index] > 0
@@ -87,7 +87,7 @@ private
   def controlled?(roll)
     index = roll_to_index(roll)
 
-    current_positions.any?{ |_, v| controls(index, v) }
+    current_positions.any?{ |_, v| controls?(index, v) }
   end
 
   def controls?(index, list)
