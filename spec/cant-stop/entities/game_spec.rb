@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Game do
-  subject { Game.new({}) }
+  subject { described_class.new({}) }
 
   context 'new Game' do
     it 'can move' do
