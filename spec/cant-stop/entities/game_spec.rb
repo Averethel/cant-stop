@@ -239,4 +239,42 @@ RSpec.describe Game do
       expect(subject.continue!).to eq(new_roll)
     end
   end
+
+  context 'winning conditions' do
+    before do
+      allow(subject).to receive(:current_positions).and_return(current_positions)
+    end
+
+    context 'there is a winner' do
+      let(:current_positions) { { "0" => [3, 0, 2, 0, 4, 13, 0, 0, 0, 5, 0], "1" => [3, 0, 2, 0, 4, 2, 0, 0, 0, 5, 0] } }
+
+      context '.game_over?' do
+        it 'returns true' do
+          expect(subject.game_over?).to be true
+        end
+      end
+
+      context '.winner' do
+        it 'returns the winning player number' do
+          expect(subject.winner).to eq 0
+        end
+      end
+    end
+
+    context 'there is no winner' do
+      let(:current_positions) { { "0" => [1, 0, 2, 0, 4, 13, 0, 0, 0, 5, 0], "1" => [3, 0, 2, 0, 4, 2, 0, 0, 0, 5, 0] } }
+
+      context '.game_over?' do
+        it 'returns false' do
+          expect(subject.game_over?).to be false
+        end
+      end
+
+      context '.winner' do
+        it 'returns the winning player number' do
+          expect(subject.winner).to eq nil
+        end
+      end
+    end
+  end
 end

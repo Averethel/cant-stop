@@ -1,0 +1,13 @@
+<h1>Can't stop</h1>
+
+<ul>
+  <% games.each do |game| %>
+    <li><%= link_to game.id, routes.game_path(game.id) %></li>
+  <% end %>
+</ul>
+
+<%=
+  form_for :game, routes.games_path do
+    submit 'New game'
+  end
+%>

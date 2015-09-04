@@ -1,5 +1,4 @@
 require 'json'
-require 'byebug'
 
 class Game
   include Lotus::Entity
@@ -71,7 +70,25 @@ class Game
     self.runner_positions
   end
 
-private
+  def game_over?
+    winner != nil
+  end
+
+  def winner
+    current_positions.values.map { |positions| finished_rows(positions) }.map(&:size).index(3)
+  end
+
+  private
+
+  def finished_rows(positions)
+    [].tap do |row_indices|
+      positions.each_with_index do |position, index|
+        if position == ROW_LENGTHS[index]
+          row_indices << index
+        end
+      end
+    end
+  end
 
   def save_progress
     positions = current_positions
