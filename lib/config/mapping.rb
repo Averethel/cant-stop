@@ -5,4 +5,5 @@ collection :games do
   attribute :id, Integer
   attribute :current_runners, String
   attribute :player_positions, String
+  attribute :current_player, Integer
 end

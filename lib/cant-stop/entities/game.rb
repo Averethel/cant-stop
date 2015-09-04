@@ -1,14 +1,15 @@
 require 'json'
+require 'byebug'
 
 class Game
   include Lotus::Entity
 
   ROW_LENGTHS =  [3, 5, 7, 9, 11, 13, 11, 9, 7, 5, 3]
 
-  attributes :current_runners, :current_roll, :player_positions
+  attributes :current_runners, :current_roll, :player_positions, :current_player
 
   def initialize(attributes)
-    player_count = attributes[:player_count] || 0
+    player_count = attributes[:player_count] || 2
 
     @current_roll          = roll_dice.join(',')
     self.runner_positions  = Array.new(11, 0)
@@ -17,6 +18,7 @@ class Game
         player_positions[i+1] = Array.new(11, 0)
       end
     end
+    self.current_player = 1
     super
   end
 
@@ -51,7 +53,44 @@ class Game
     possible_rolls.any?{ |r| can_progress_or_add_runner?(r) }
   end
 
+  def move(rolls)
+    raise "Invalid rolls" unless valid_rolls?(rolls)
+    rolls.each do |roll|
+      progress(roll)
+    end
+    self.runner_positions
+  end
+
+
 private
+
+  def progress(roll)
+    return move_runner(roll) if has_runner?(roll)
+    add_runner(roll) if runner_count < 3
+  end
+
+  def add_runner(roll)
+    index = roll_to_index(roll)
+    positions = runner_positions
+    positions[index] = current_positions[current_player.to_s][index] + 1
+    self.runner_positions = positions
+  end
+
+  def move_runner(roll)
+    positions = runner_positions
+    positions[roll_to_index(roll)] += 1 unless runner_on_top?(roll)
+    self.runner_positions = positions
+  end
+
+  def valid_rolls?(rolls)
+    current_dice_sums.include?(rolls.sort)
+  end
+
+  def current_dice_sums
+    [[current_dice_roll[0]+current_dice_roll[1], current_dice_roll[2]+current_dice_roll[3]].sort,
+    [current_dice_roll[1]+current_dice_roll[2], current_dice_roll[0]+current_dice_roll[3]].sort,
+    [current_dice_roll[0]+current_dice_roll[2], current_dice_roll[1]+current_dice_roll[3]].sort]
+  end
 
   def can_progress_or_add_runner?(roll)
     can_place_runner?(roll) &&
