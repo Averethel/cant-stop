@@ -15,10 +15,10 @@ class Game
     self.runner_positions  = Array.new(11, 0)
     self.current_positions = {}.tap do |player_positions|
       player_count.times do |i|
-        player_positions[i+1] = Array.new(11, 0)
+        player_positions[i] = Array.new(11, 0)
       end
     end
-    self.current_player = 1
+    self.current_player = 0
     super
   end
 

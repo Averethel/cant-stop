@@ -52,7 +52,7 @@ RSpec.describe Game do
 
       context do
         let(:runner_positions) { [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
-        let(:current_positions) { { "1" => [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] } }
+        let(:current_positions) { { "0" => [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] } }
 
         before do
           allow(subject).to receive(:current_positions).and_return(current_positions)
@@ -102,7 +102,7 @@ RSpec.describe Game do
 
     context 'board in play' do
       let(:dice_roll) {[5, 3, 2, 2]}
-      let(:current_positions) { { "1" => [0, 0, 2, 0, 4, 0, 0, 0, 0, 0, 0] } }
+      let(:current_positions) { { "0" => [0, 0, 2, 0, 4, 0, 0, 0, 0, 0, 0] } }
 
       before do
         allow(subject).to receive(:current_positions).and_return(current_positions)
@@ -115,7 +115,7 @@ RSpec.describe Game do
 
     context 'board in play with active moves' do
       let(:dice_roll) {[5, 3, 2, 2]}
-      let(:current_positions) { { "1" => [0, 0, 2, 0, 4, 0, 0, 0, 0, 0, 0] } }
+      let(:current_positions) { { "0" => [0, 0, 2, 0, 4, 0, 0, 0, 0, 0, 0] } }
 
       before do
         allow(subject).to receive(:current_positions).and_return(current_positions)
