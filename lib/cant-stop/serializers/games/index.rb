@@ -1,3 +1,5 @@
+require_relative '../serializers'
+
 module Serializers::Games
   class Index
     def initialize(game)
