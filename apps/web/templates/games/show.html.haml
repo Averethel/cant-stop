@@ -9,32 +9,39 @@
   %dt Current roll:
   %dd= game.current_dice_roll
 
-- if game.started?
-
-  - if game.move_state?
-    - if game.can_move?
-      = form_for :game, routes.move_game_path(game.id) do
-        - select :sums, dice_sums
-        - submit 'Move'
-    - else
-      %p You cannot move!
-      = form_for :game, routes.fail_move_game_path(game.id) do
-        - submit 'End turn'
-
-  - else
-    = form_for :game, routes.stop_game_path(game.id) do
-      - submit 'End turn'
-
-    = form_for :game, routes.continue_game_path(game.id) do
-      - submit 'Continue turn'
+- if game.game_over?
+  %p
+    The game is over. Player
+    = game.winner
+    is the winner.
 
 - else
-  = form_for :game, routes.start_game_path(game.id) do
-    - submit 'Start game'
+  - if game.started?
+
+    - if game.move_state?
+      - if game.can_move?
+        = form_for :game, routes.move_game_path(game.id) do
+          - select :sums, dice_sums
+          - submit 'Move'
+      - else
+        %p You cannot move!
+        = form_for :game, routes.fail_move_game_path(game.id) do
+          - submit 'End turn'
+
+    - else
+      = form_for :game, routes.stop_game_path(game.id) do
+        - submit 'End turn'
+
+      = form_for :game, routes.continue_game_path(game.id) do
+        - submit 'Continue turn'
+
+  - else
+    = form_for :game, routes.start_game_path(game.id) do
+      - submit 'Start game'
 
 .board
   - Game::ROW_LENGTHS.each_with_index do |column_length, column_index|
     .board-column
       - column_length.times do |row_index|
-        %div{class: "board-row #{player_classes(column_index, row_index + 1)} #{runner_class(column_index, row_index + 1)}"}
+        %div{class: "board-row #{player_classes(column_index, column_length - row_index)} #{runner_class(column_index, column_length - row_index)}"}
           = column_index + 2
