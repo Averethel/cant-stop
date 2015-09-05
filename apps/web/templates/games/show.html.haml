@@ -1,0 +1,15 @@
+%h1= "Game #{game.id}"
+
+%dl
+  %dt Current player:
+  %dd= game.current_player
+
+  %dt Current roll:
+  %dd= game.current_dice_roll
+
+.board
+  - Game::ROW_LENGTHS.each_with_index do |column_length, column_index|
+    .board-column
+      - column_length.times do |row_index|
+        %div{class: "board-row #{player_classes(column_index, row_index + 1)} #{runner_class(column_index, row_index + 1)}"}
+          = column_index + 2
