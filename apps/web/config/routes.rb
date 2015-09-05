@@ -1,3 +1,6 @@
+namespace 'api' do
+  get 'games', to: 'api_games#index'
+end
 # get '/game', to: 'game#index'
 # get '/game', to: 'game#show'
 # post '/game', to: 'game#create', as: :game
