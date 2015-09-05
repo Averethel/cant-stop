@@ -23,5 +23,9 @@ module Web::Views::Games
         ''
       end
     end
+
+    def dice_sums
+      game.current_dice_sums.map{|e| [e.join(','), e]}
+    end
   end
 end
