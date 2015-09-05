@@ -2,6 +2,7 @@ require 'json'
 require_relative '../exceptions/invalid_rolls'
 require_relative '../exceptions/cant_stop'
 require_relative '../exceptions/cant_continue'
+require_relative '../exceptions/can_move'
 
 class Game
   include Lotus::Entity
@@ -111,7 +112,7 @@ class Game
   end
 
   def fail_move!
-    raise "You can move" if can_move?
+    raise Exceptions::CanMove if can_move?
     change_player!
   end
 
