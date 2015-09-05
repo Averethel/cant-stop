@@ -163,6 +163,10 @@ RSpec.describe Game do
       let(:dice_roll) {[2, 3, 4, 5]}
       let(:current_positions) { { "0" => [0, 1, 0, 6, 4, 4, 6, 1, 6, 0, 0], "1" => [0, 1, 1, 9, 5, 1, 1, 2, 1, 0, 0]} }
 
+      before do
+        allow(subject).to receive(:current_positions).and_return(current_positions)
+      end
+
       it 'should not add a runner for the finished column' do
         subject.move([5, 9])
         expect(subject.runner_positions).to eq([0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0])

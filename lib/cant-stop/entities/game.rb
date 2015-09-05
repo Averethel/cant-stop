@@ -161,6 +161,7 @@ class Game
   end
 
   def progress(roll)
+    return if controlled?(roll)
     return move_runner(roll) if has_runner?(roll)
     add_runner(roll) if runner_count < 3
   end
@@ -183,6 +184,7 @@ class Game
   end
 
   def can_progress_or_add_runner?(roll)
+    !controlled?(roll) &&
     can_place_runner?(roll) &&
     (has_runner?(roll) || runner_count < 3)
   end
