@@ -72,11 +72,6 @@ class Game
     progress = save_progress
     change_player!
 
-    if ai_type == 'random'
-      ai = RandomAi.new(self)
-      ai.do_turn
-    end
-
     progress
   end
 
@@ -161,6 +156,11 @@ class Game
     reset_runners
     next_player
     roll_dice!
+
+    if ai_type == 'random'
+      ai = RandomAi.new(self)
+      ai.do_turn
+    end
   end
 
   def reset_roll
