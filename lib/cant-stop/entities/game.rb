@@ -103,13 +103,45 @@ class Game
   end
 
   def current_dice_sums
+    current_dice_pairs.map do |ps|
+      ps.map{ |p| p.inject(:+) }.sort
+    end
+  end
+
+  def current_dice_pairs
     return [] if current_dice_roll.empty?
 
+    roll = current_dice_roll.sort
+
     [
-      [current_dice_roll[0] + current_dice_roll[1], current_dice_roll[2] + current_dice_roll[3]].sort,
-      [current_dice_roll[1] + current_dice_roll[2], current_dice_roll[0] + current_dice_roll[3]].sort,
-      [current_dice_roll[0] + current_dice_roll[2], current_dice_roll[1] + current_dice_roll[3]].sort
+      [
+        [roll[0], roll[1]],
+        [roll[2], roll[3]]
+      ],
+      [
+        [roll[1], roll[2]],
+        [roll[0], roll[3]]
+      ],
+      [
+        [roll[0], roll[2]],
+        [roll[1], roll[3]]
+      ]
     ]
+  end
+
+  def current_dice_pairs_with_validity
+    current_dice_pairs.map do |ps|
+      {
+        rolls: ps.map do |p|
+          sum = p.inject(:+)
+          {
+            dice: p,
+            sum: sum,
+            progressable: can_progress_or_add_runner?(sum)
+          }
+        end
+      }
+    end
   end
 
   def fail_move!

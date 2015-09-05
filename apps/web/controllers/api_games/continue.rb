@@ -6,7 +6,8 @@ module Web::Controllers::ApiGames
     def call(params)
       game = GameRepository.find(params[:id])
       begin
-        @roll = game.continue!
+        game.continue!
+        @roll = game.current_dice_pairs_with_validity
         GameRepository.persist(game)
       rescue Exceptions::CantContinue
         status 400, "Make a move first"
