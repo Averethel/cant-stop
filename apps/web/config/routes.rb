@@ -1,6 +1,5 @@
 namespace 'api' do
-  get 'games', to: 'api_games#index'
-  get 'games/:id', to: 'api_games#show'
+  resources :games, only: [:index, :show], controller: :api_games
 end
 
 post '/games/:id/continue', to: 'games#continue', as: :continue_game
