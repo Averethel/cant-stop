@@ -16,6 +16,10 @@
     = form_for :game, routes.continue_game_path(game.id) do
       - submit 'Continue turn'
 
+    = form_for :game, routes.move_game_path(game.id) do
+      - select :sums, dice_sums
+      - submit 'move'
+
   - else
     = form_for :game, routes.start_game_path(game.id) do
       - submit 'Start game'

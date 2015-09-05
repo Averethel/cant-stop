@@ -82,6 +82,14 @@ class Game
     current_roll != nil
   end
 
+  def current_dice_sums
+    [
+      [current_dice_roll[0] + current_dice_roll[1], current_dice_roll[2] + current_dice_roll[3]].sort,
+      [current_dice_roll[1] + current_dice_roll[2], current_dice_roll[0] + current_dice_roll[3]].sort,
+      [current_dice_roll[0] + current_dice_roll[2], current_dice_roll[1] + current_dice_roll[3]].sort
+    ]
+  end
+
   private
 
   def finished_rows(positions)
@@ -135,12 +143,6 @@ class Game
 
   def valid_rolls?(rolls)
     current_dice_sums.include?(rolls.sort)
-  end
-
-  def current_dice_sums
-    [[current_dice_roll[0]+current_dice_roll[1], current_dice_roll[2]+current_dice_roll[3]].sort,
-    [current_dice_roll[1]+current_dice_roll[2], current_dice_roll[0]+current_dice_roll[3]].sort,
-    [current_dice_roll[0]+current_dice_roll[2], current_dice_roll[1]+current_dice_roll[3]].sort]
   end
 
   def can_progress_or_add_runner?(roll)
