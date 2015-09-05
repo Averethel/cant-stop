@@ -1,4 +1,5 @@
 require 'json'
+require_relative '../exceptions/invalid_rolls'
 
 class Game
   include Lotus::Entity
@@ -63,7 +64,7 @@ class Game
   end
 
   def move(rolls)
-    raise "Invalid rolls" unless valid_rolls?(rolls)
+    raise Exceptions::InvalidRolls unless valid_rolls?(rolls)
     rolls.each do |roll|
       progress(roll)
     end
@@ -134,6 +135,8 @@ class Game
   end
 
   def current_dice_sums
+    return [] if current_dice_roll.empty?
+
     [[current_dice_roll[0]+current_dice_roll[1], current_dice_roll[2]+current_dice_roll[3]].sort,
     [current_dice_roll[1]+current_dice_roll[2], current_dice_roll[0]+current_dice_roll[3]].sort,
     [current_dice_roll[0]+current_dice_roll[2], current_dice_roll[1]+current_dice_roll[3]].sort]
