@@ -5,8 +5,7 @@ module Web::Views::ApiGames
     format :json
 
     def render
-      games.map{|g| Serializers::Games::Index.new(g).serialize}.to_json
+      Serializers::Games::Index.serialize_collection(games).to_json
     end
-
   end
 end

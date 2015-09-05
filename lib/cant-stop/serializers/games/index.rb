@@ -9,5 +9,9 @@ module Serializers::Games
     def serialize
       {id:@game.id}
     end
+
+    def self.serialize_collection(collection)
+      collection.map{ |e| new(e).serialize }
+    end
   end
 end
