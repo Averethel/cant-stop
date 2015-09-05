@@ -36,3 +36,7 @@
 .runner {
   background-color: purple;
 }
+
+.debug {
+  background-color: gray;
+}

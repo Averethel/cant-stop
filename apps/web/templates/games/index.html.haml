@@ -6,3 +6,7 @@
 
   = form_for :game, routes.games_path do
     - submit 'New game'
+
+  = form_for :game, routes.games_path do
+    - select :ai_type, [[:random, 'Random']]
+    - submit 'New game with AI'
