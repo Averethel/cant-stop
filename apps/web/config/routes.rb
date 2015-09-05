@@ -4,6 +4,7 @@ namespace 'api' do
       post :continue
       post :stop
       post :move
+      post :fail_move
     end
   end
 end
