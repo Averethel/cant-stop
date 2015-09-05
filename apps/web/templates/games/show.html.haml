@@ -1,5 +1,7 @@
 %h1= "Game #{game.id}"
 
+= link_to 'Back to game list', routes.games_path
+
 %dl
   %dt Current player:
   %dd= game.current_player
@@ -12,6 +14,10 @@
 
   = form_for :game, routes.continue_game_path(game.id) do
     - submit 'Continue turn'
+
+  - unless game.started?
+    = form_for :game, routes.start_game_path(game.id) do
+      - submit 'Start game'
 
 .board
   - Game::ROW_LENGTHS.each_with_index do |column_length, column_index|
