@@ -1,4 +1,8 @@
 require 'json'
+require_relative '../exceptions/invalid_rolls'
+require_relative '../exceptions/cant_stop'
+require_relative '../exceptions/cant_continue'
+require_relative '../exceptions/can_move'
 
 class Game
   include Lotus::Entity
@@ -46,7 +50,12 @@ class Game
     @current_roll = roll.join(',')
     roll
   end
-  alias :continue! :roll_dice!
+
+  def continue!
+    raise Exceptions::CantContinue unless current_dice_roll.empty?
+
+    roll_dice!
+  end
 
   def started?
     started
@@ -58,6 +67,7 @@ class Game
   end
 
   def stop!
+    raise Exceptions::CantStop unless current_dice_roll.empty?
     progress = save_progress
     change_player!
 
@@ -69,7 +79,7 @@ class Game
   end
 
   def move(rolls)
-    raise "Invalid rolls" unless valid_rolls?(rolls)
+    raise Exceptions::InvalidRolls unless valid_rolls?(rolls)
     rolls.each do |roll|
       progress(roll)
     end
@@ -92,6 +102,8 @@ class Game
   end
 
   def current_dice_sums
+    return [] if current_dice_roll.empty?
+
     [
       [current_dice_roll[0] + current_dice_roll[1], current_dice_roll[2] + current_dice_roll[3]].sort,
       [current_dice_roll[1] + current_dice_roll[2], current_dice_roll[0] + current_dice_roll[3]].sort,
@@ -100,7 +112,7 @@ class Game
   end
 
   def fail_move!
-    raise "You can move" if can_move?
+    raise Exceptions::CanMove if can_move?
     change_player!
   end
 

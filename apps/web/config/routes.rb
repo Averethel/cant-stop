@@ -1,3 +1,13 @@
+namespace 'api' do
+  resources :games, only: [:index, :show], controller: :api_games do
+    member do
+      post :continue
+      post :stop
+      post :move
+    end
+  end
+end
+
 post '/games/:id/start', to: 'games#start', as: :start_game
 post '/games/:id/continue', to: 'games#continue', as: :continue_game
 post '/games/:id/stop', to: 'games#stop', as: :stop_game
