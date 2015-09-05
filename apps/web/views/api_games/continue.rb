@@ -1,10 +1,12 @@
+require_relative '../../../../lib/cant-stop/serializers/games/show'
+
 module Web::Views::ApiGames
   class Continue
     include Web::View
     format :json
 
     def render
-      _raw roll.to_json
+      _raw Serializers::Games::Show.new(game).serialize.to_json
     end
   end
 end

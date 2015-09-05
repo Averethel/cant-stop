@@ -1,13 +1,13 @@
 module Web::Controllers::ApiGames
   class Move
     include Web::Action
-    expose :runners
+    expose :game
 
     def call(params)
-      game = GameRepository.find(params[:id])
+      @game = GameRepository.find(params[:id])
       begin
-        @runners = game.move(data['rolls'])
-        GameRepository.persist(game)
+        @game.move(data['rolls'])
+        GameRepository.persist(@game)
       rescue Exceptions::InvalidRolls
         status 400, "Invalid rolls selected"
       end
