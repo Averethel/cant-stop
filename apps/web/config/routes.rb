@@ -1,5 +1,9 @@
 namespace 'api' do
-  resources :games, only: [:index, :show], controller: :api_games
+  resources :games, only: [:index, :show], controller: :api_games do
+    member do
+      post :move
+    end
+  end
 end
 
 post '/games/:id/continue', to: 'games#continue', as: :continue_game
