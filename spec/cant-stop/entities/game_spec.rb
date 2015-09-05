@@ -4,6 +4,10 @@ RSpec.describe Game do
   subject { described_class.new({}) }
 
   context 'new Game' do
+    before do
+      subject.start!
+    end
+
     it 'can move' do
       expect(subject.can_move?).to be true
     end
