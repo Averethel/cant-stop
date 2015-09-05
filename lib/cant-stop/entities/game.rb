@@ -68,9 +68,7 @@ class Game
   def stop!
     raise Exceptions::CantStop unless current_dice_roll.empty?
     progress = save_progress
-    reset_runners
-    next_player
-    roll_dice!
+    change_player!
 
     progress
   end
@@ -112,7 +110,18 @@ class Game
     ]
   end
 
+  def fail_move!
+    raise "You can move" if can_move?
+    change_player!
+  end
+
   private
+
+  def change_player!
+    reset_runners
+    next_player
+    roll_dice!
+  end
 
   def reset_roll
     @current_roll = ""

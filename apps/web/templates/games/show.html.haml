@@ -9,23 +9,26 @@
   %dt Current roll:
   %dd= game.current_dice_roll
 
-  - if game.started?
+- if game.started?
 
-    - if game.move_state?
+  - if game.move_state?
+    - if game.can_move?
       = form_for :game, routes.move_game_path(game.id) do
         - select :sums, dice_sums
         - submit 'Move'
-
     - else
-      = form_for :game, routes.stop_game_path(game.id) do
-        - submit 'End turn'
-
-      = form_for :game, routes.continue_game_path(game.id) do
-        - submit 'Continue turn'
+      %p You cannot move!
 
   - else
-    = form_for :game, routes.start_game_path(game.id) do
-      - submit 'Start game'
+    = form_for :game, routes.stop_game_path(game.id) do
+      - submit 'End turn'
+
+    = form_for :game, routes.continue_game_path(game.id) do
+      - submit 'Continue turn'
+
+- else
+  = form_for :game, routes.start_game_path(game.id) do
+    - submit 'Start game'
 
 .board
   - Game::ROW_LENGTHS.each_with_index do |column_length, column_index|
