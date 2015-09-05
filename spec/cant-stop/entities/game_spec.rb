@@ -239,7 +239,6 @@ RSpec.describe Game do
     let(:new_roll){ [1,2,3,4] }
 
     before do
-      subject.current_roll = "1,1,1,1"
       allow(subject).to receive(:roll_dice).and_return(new_roll)
     end
 
