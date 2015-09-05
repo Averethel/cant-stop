@@ -4,7 +4,7 @@ module Web::Views::ApiGames
     format :json
 
     def render
-      _raw runners.to_json
+      _raw { runner_positions: runners }.to_json
     end
   end
 end
