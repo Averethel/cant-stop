@@ -5,7 +5,7 @@ class Game
 
   ROW_LENGTHS =  [3, 5, 7, 9, 11, 13, 11, 9, 7, 5, 3]
 
-  attributes :current_runners, :current_roll, :player_positions, :current_player
+  attributes :current_runners, :current_roll, :player_positions, :current_player, :started
 
   def initialize(attributes)
     player_count = attributes[:player_count] || 2
@@ -47,7 +47,15 @@ class Game
     roll
   end
   alias :continue! :roll_dice!
-  alias :start! :roll_dice!
+
+  def started?
+    started
+  end
+
+  def start!
+    self.started = true
+    roll_dice!
+  end
 
   def stop!
     progress = save_progress
@@ -67,7 +75,14 @@ class Game
     rolls.each do |roll|
       progress(roll)
     end
+
+    reset_roll
+
     self.runner_positions
+  end
+
+  def move_state?
+    !current_dice_roll.empty?
   end
 
   def game_over?
@@ -76,10 +91,6 @@ class Game
 
   def winner
     current_positions.values.map { |positions| finished_rows(positions) }.map(&:size).index(3)
-  end
-
-  def started?
-    current_roll != nil
   end
 
   def current_dice_sums
@@ -91,6 +102,10 @@ class Game
   end
 
   private
+
+  def reset_roll
+    current_dice_roll = []
+  end
 
   def finished_rows(positions)
     [].tap do |row_indices|

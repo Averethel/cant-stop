@@ -3,8 +3,8 @@ module Web::Controllers::Games
     include Web::Action
 
     def call(params)
-      GameRepository.persist(Game.new(player_count: 2))
-      redirect_to routes.games_path
+      game = GameRepository.persist(Game.new(player_count: 2))
+      redirect_to routes.game_path(game.id)
     end
   end
 end

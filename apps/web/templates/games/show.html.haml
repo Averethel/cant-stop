@@ -10,15 +10,18 @@
   %dd= game.current_dice_roll
 
   - if game.started?
-    = form_for :game, routes.stop_game_path(game.id) do
-      - submit 'End turn'
 
-    = form_for :game, routes.continue_game_path(game.id) do
-      - submit 'Continue turn'
+    - if game.move_state?
+      = form_for :game, routes.move_game_path(game.id) do
+        - select :sums, dice_sums
+        - submit 'Move'
 
-    = form_for :game, routes.move_game_path(game.id) do
-      - select :sums, dice_sums
-      - submit 'move'
+    - else
+      = form_for :game, routes.stop_game_path(game.id) do
+        - submit 'End turn'
+
+      = form_for :game, routes.continue_game_path(game.id) do
+        - submit 'Continue turn'
 
   - else
     = form_for :game, routes.start_game_path(game.id) do

@@ -7,4 +7,5 @@ collection :games do
   attribute :player_positions, String
   attribute :current_player, Integer
   attribute :current_roll, String
+  attribute :started, Boolean
 end
