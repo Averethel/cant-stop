@@ -1,0 +1,38 @@
+.board {
+  width: 500px;
+  height: 500px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-column {
+  width: 50px;
+  height: 400px;
+
+  display: block;
+}
+
+.board-row {
+  width: 20px;
+  height: 20px;
+
+  display: block;
+}
+
+.player-0 {
+  background-color: red;
+}
+
+.player-1 {
+  background-color: green;
+}
+
+.player-2 {
+  background-color: blue;
+}
+
+.runner {
+  background-color: purple;
+}

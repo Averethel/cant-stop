@@ -10,7 +10,6 @@ class Game
   def initialize(attributes)
     player_count = attributes[:player_count] || 2
 
-    @current_roll          = roll_dice.join(',')
     self.runner_positions  = Array.new(11, 0)
     self.current_positions = {}.tap do |player_positions|
       player_count.times do |i|
@@ -38,16 +37,17 @@ class Game
   end
 
   def current_dice_roll
+    return [] if @current_roll.nil?
     @current_roll.split(',').map(&:to_i)
   end
 
   def roll_dice!
     roll = roll_dice
     @current_roll = roll.join(',')
-    GameRepository.persist(self)
     roll
   end
   alias :continue! :roll_dice!
+  alias :start! :roll_dice!
 
   def stop!
     progress = save_progress

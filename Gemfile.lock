@@ -11,6 +11,8 @@ GEM
     coderay (1.1.0)
     diff-lcs (1.2.5)
     dotenv (2.0.2)
+    haml (4.0.7)
+      tilt
     http_router (0.11.2)
       rack (>= 1.0.0)
       url_mount (~> 0.2.1)
@@ -86,6 +88,7 @@ DEPENDENCIES
   bundler
   byebug
   capybara
+  haml
   lotus-model (~> 0.4)
   lotusrb (= 0.4.1)
   pg
