@@ -107,7 +107,7 @@ class Game
   private
 
   def reset_roll
-    @current_roll = []
+    @current_roll = ""
   end
 
   def finished_rows(positions)
