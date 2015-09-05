@@ -71,7 +71,7 @@ RSpec.describe Game do
       allow(subject).to receive(:current_dice_roll).and_return(dice_roll)
     end
 
-    context '.valid_rolls' do
+    context '#valid_rolls' do
       let(:dice_roll) { [1, 2, 3, 4] }
       it 'rejects invalid rolls' do
         expect(subject.send(:valid_rolls?, [2, 2])).to be false
@@ -88,7 +88,7 @@ RSpec.describe Game do
     end
   end
 
-  context '.move' do
+  context '#move' do
     before do
       allow(subject).to receive(:current_dice_roll).and_return(dice_roll)
     end
@@ -144,7 +144,7 @@ RSpec.describe Game do
     end
   end
 
-  context '.stop!' do
+  context '#stop!' do
     let(:new_roll){ [1,2,3,4] }
     let(:current_positions){{
       "0" => [0, 0, 2, 0, 4, 0, 0, 0, 0, 0, 0],
@@ -219,7 +219,7 @@ RSpec.describe Game do
     end
   end
 
-  context '.continue!' do
+  context '#continue!' do
     let(:new_roll){ [1,2,3,4] }
 
     before do
@@ -248,13 +248,13 @@ RSpec.describe Game do
     context 'there is a winner' do
       let(:current_positions) { { "0" => [3, 0, 2, 0, 4, 13, 0, 0, 0, 5, 0], "1" => [3, 0, 2, 0, 4, 2, 0, 0, 0, 5, 0] } }
 
-      context '.game_over?' do
+      context '#game_over?' do
         it 'returns true' do
           expect(subject.game_over?).to be true
         end
       end
 
-      context '.winner' do
+      context '#winner' do
         it 'returns the winning player number' do
           expect(subject.winner).to eq 0
         end
@@ -264,13 +264,13 @@ RSpec.describe Game do
     context 'there is no winner' do
       let(:current_positions) { { "0" => [1, 0, 2, 0, 4, 13, 0, 0, 0, 5, 0], "1" => [3, 0, 2, 0, 4, 2, 0, 0, 0, 5, 0] } }
 
-      context '.game_over?' do
+      context '#game_over?' do
         it 'returns false' do
           expect(subject.game_over?).to be false
         end
       end
 
-      context '.winner' do
+      context '#winner' do
         it 'returns the winning player number' do
           expect(subject.winner).to eq nil
         end
