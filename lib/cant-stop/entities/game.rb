@@ -44,7 +44,6 @@ class Game
   def roll_dice!
     roll = roll_dice
     @current_roll = roll.join(',')
-    GameRepository.persist(self)
     roll
   end
   alias :continue! :roll_dice!
