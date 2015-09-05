@@ -4,10 +4,10 @@ module Web::Views::ApiGames
     format :json
 
     def render
-      _raw {
+      _raw({
         player_positions: progress,
         player: player
-      }.to_json,
+      }.to_json)
     end
   end
 end
