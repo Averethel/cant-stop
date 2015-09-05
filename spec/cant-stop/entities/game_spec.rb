@@ -146,6 +146,18 @@ RSpec.describe Game do
         expect(subject.move([4,2])).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1])
       end
     end
+
+    context 'board with 3 runners' do
+      let(:dice_roll) {[2, 3, 4, 5]}
+
+      before do
+        subject.runner_positions = [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1]
+      end
+
+      it 'should fail' do
+        expect{ subject.move([7, 7]) }.to raise_exception
+      end
+    end
   end
 
   context '#stop!' do
