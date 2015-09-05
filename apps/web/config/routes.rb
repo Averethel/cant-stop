@@ -1,6 +1,7 @@
 namespace 'api' do
   resources :games, only: [:index, :show], controller: :api_games do
     member do
+      post :continue
       post :move
     end
   end
