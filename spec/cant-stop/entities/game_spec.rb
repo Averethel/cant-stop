@@ -155,7 +155,7 @@ RSpec.describe Game do
       end
 
       it 'should fail' do
-        expect{ subject.move([7, 7]) }.to raise_exception
+        expect{ subject.move([7, 7]) }.to raise_exception(Exceptions::InvalidRolls)
       end
     end
   end

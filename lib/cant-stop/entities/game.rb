@@ -80,6 +80,7 @@ class Game
 
   def move(rolls)
     raise Exceptions::InvalidRolls unless valid_rolls?(rolls)
+    raise Exceptions::InvalidRolls unless rolls.any?{ |r| can_progress_or_add_runner?(r) }
     rolls.each do |roll|
       progress(roll)
     end
