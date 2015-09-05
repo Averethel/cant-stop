@@ -1,5 +1,7 @@
 require 'json'
 require_relative '../exceptions/invalid_rolls'
+require_relative '../exceptions/cant_stop'
+require_relative '../exceptions/cant_continue'
 
 class Game
   include Lotus::Entity
@@ -47,7 +49,12 @@ class Game
     @current_roll = roll.join(',')
     roll
   end
-  alias :continue! :roll_dice!
+
+  def continue!
+    raise Exceptions::CantContinue unless current_dice_roll.empty?
+
+    roll_dice!
+  end
 
   def started?
     started
@@ -59,6 +66,7 @@ class Game
   end
 
   def stop!
+    raise Exceptions::CantStop unless current_dice_roll.empty?
     progress = save_progress
     reset_runners
     next_player

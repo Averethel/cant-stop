@@ -5,8 +5,12 @@ module Web::Controllers::ApiGames
 
     def call(params)
       game = GameRepository.find(params[:id])
-      @roll = game.continue!
-      GameRepository.persist(game)
+      begin
+        @roll = game.continue!
+        GameRepository.persist(game)
+      rescue Exceptions::CantContinue
+        status 400, "Make a move first"
+      end
     end
   end
 end
