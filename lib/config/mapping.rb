@@ -8,4 +8,5 @@ collection :games do
   attribute :current_player, Integer
   attribute :current_roll, String
   attribute :started, Boolean
+  attribute :ai_type, String
 end

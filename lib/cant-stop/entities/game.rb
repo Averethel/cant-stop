@@ -9,7 +9,7 @@ class Game
 
   ROW_LENGTHS =  [3, 5, 7, 9, 11, 13, 11, 9, 7, 5, 3]
 
-  attributes :current_runners, :current_roll, :player_positions, :current_player, :started
+  attributes :current_runners, :current_roll, :player_positions, :current_player, :started, :ai_type
 
   def initialize(attributes)
     player_count = attributes[:player_count] || 2
@@ -21,6 +21,7 @@ class Game
       end
     end
     self.current_player = 0
+
     super
   end
 
@@ -70,6 +71,11 @@ class Game
     raise Exceptions::CantStop unless current_dice_roll.empty?
     progress = save_progress
     change_player!
+
+    if ai_type == 'random'
+      ai = RandomAi.new(self)
+      ai.do_turn
+    end
 
     progress
   end

@@ -1,8 +1,9 @@
 class RandomAi
-  attr_reader :game
+  attr_reader :game, :player
 
-  def initialize(game)
+  def initialize(game, player = 1)
     @game = game
+    @player = player
   end
 
   def run
@@ -13,6 +14,16 @@ class RandomAi
     end
 
     puts "Game over, player #{game.winner} won."
+  end
+
+  def do_turn
+    if game.current_player.to_i == player
+      puts "Doing AI turn"
+    end
+
+    while game.current_player.to_i == player
+      do_game_move
+    end
   end
 
   private
@@ -28,8 +39,6 @@ class RandomAi
     else
       continue_or_stop_turn
     end
-
-    @game = GameRepository.persist(@game)
   end
 
   def random_move
