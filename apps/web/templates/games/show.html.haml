@@ -7,6 +7,12 @@
   %dt Current roll:
   %dd= game.current_dice_roll
 
+  = form_for :game, routes.stop_game_path(game.id) do
+    - submit 'End turn'
+
+  = form_for :game, routes.continue_game_path(game.id) do
+    - submit 'Continue turn'
+
 .board
   - Game::ROW_LENGTHS.each_with_index do |column_length, column_index|
     .board-column
