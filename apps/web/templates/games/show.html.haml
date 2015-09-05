@@ -4,7 +4,7 @@
 
 %dl
   %dt Current player:
-  %dd= game.current_player
+  %dd{class: "player-#{game.current_player}"}= game.current_player
 
   %dt Current roll:
   %dd= game.current_dice_roll
@@ -18,6 +18,8 @@
         - submit 'Move'
     - else
       %p You cannot move!
+      = form_for :game, routes.fail_move_game_path(game.id) do
+        - submit 'End turn'
 
   - else
     = form_for :game, routes.stop_game_path(game.id) do
