@@ -6,7 +6,7 @@ module Web::Views::ApiGames
     format :json
 
     def render
-      Serializers::Games::Show.new(game).serialize.to_json
+      _raw Serializers::Games::Show.new(game).serialize.to_json
     end
   end
 end
