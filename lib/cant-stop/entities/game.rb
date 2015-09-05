@@ -11,16 +11,9 @@ class Game
 
   attributes :current_runners, :current_roll, :player_positions, :current_player, :started, :ai_type
 
-  def initialize(attributes)
+  def initialize(attributes = {})
     player_count = attributes[:player_count] || 2
-
-    self.runner_positions  = Array.new(11, 0)
-    self.current_positions = {}.tap do |player_positions|
-      player_count.times do |i|
-        player_positions[i] = Array.new(11, 0)
-      end
-    end
-    self.current_player = 0
+    reset(player_count)
 
     super
   end
@@ -272,5 +265,16 @@ class Game
 
   def player_count
     current_positions.keys.size
+  end
+
+  def reset(player_count)
+    reset_roll
+    self.runner_positions  = Array.new(11, 0)
+    self.current_positions = {}.tap do |player_positions|
+      player_count.times do |i|
+        player_positions[i] = Array.new(11, 0)
+      end
+    end
+    self.current_player = 0
   end
 end
