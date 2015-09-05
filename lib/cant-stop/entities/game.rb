@@ -78,10 +78,6 @@ class Game
     current_positions.values.map { |positions| finished_rows(positions) }.map(&:size).index(3)
   end
 
-  def to_h
-    {}
-  end
-
   private
 
   def finished_rows(positions)

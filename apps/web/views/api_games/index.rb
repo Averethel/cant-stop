@@ -1,4 +1,4 @@
-require_relative '../../../../lib/cant-stop/serializers/games/index.rb'
+require_relative '../../../../lib/cant-stop/serializers/games/index'
 module Web::Views::ApiGames
   class Index
     include Web::View
